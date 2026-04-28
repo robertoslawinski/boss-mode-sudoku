@@ -64,6 +64,8 @@ const checkBtn = document.getElementById("checkBtn");
 const blackout = document.getElementById("blackout");
 const restoreBtn = document.getElementById("restoreBtn");
 const bossModeBtn = document.getElementById("bossModeBtn");
+const themeToggle = document.getElementById("themeToggle");
+const themeToggleText = document.getElementById("themeToggleText");
 const playNowBtn = document.getElementById("playNowBtn");
 const leaderboardList = document.getElementById("leaderboardList");
 const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
@@ -77,6 +79,28 @@ let seconds = 0;
 let timerInterval = null;
 let timerPausedByBossMode = false;
 let gameSolved = false;
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+
+  document.body.classList.toggle("dark-mode", isDark);
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggleText.textContent = isDark ? "Light" : "Dark";
+}
+
+function loadTheme() {
+  const savedTheme = localStorage.getItem("bossModeSudokuTheme") || "light";
+  applyTheme(savedTheme);
+}
+
+function toggleTheme() {
+  const nextTheme = document.body.classList.contains("dark-mode")
+    ? "light"
+    : "dark";
+
+  localStorage.setItem("bossModeSudokuTheme", nextTheme);
+  applyTheme(nextTheme);
+}
 
 function hasDigitsOneToNine(values) {
   return (
@@ -525,6 +549,8 @@ bossModeBtn.addEventListener("click", activateBossMode);
 
 restoreBtn.addEventListener("click", restoreGame);
 
+themeToggle.addEventListener("click", toggleTheme);
+
 document.addEventListener("keydown", (event) => {
   const key = event.key;
 
@@ -609,5 +635,6 @@ document.addEventListener("mousemove", (event) => {
 });
 
 validatePuzzles();
+loadTheme();
 loadStreak();
 createBoard();

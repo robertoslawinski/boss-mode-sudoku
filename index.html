@@ -16,13 +16,16 @@
   />
 
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/logo-icon.png" />
 </head>
 <body>
 
 <header class="app-header">
 
   <div class="brand">
-    <div class="brand-icon">B</div>
+    <div class="brand-icon">
+      <img src="assets/logo-icon.png" alt="Boss Mode Sudoku logo" />
+    </div>
 
     <div>
       <h1>Boss Mode Sudoku</h1>
@@ -33,6 +36,10 @@
   <nav class="header-nav">
     <button class="nav-item active">Daily Puzzle</button>
     <button class="nav-item" id="bossModeBtn">Boss Mode</button>
+    <button class="nav-item theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+      <span id="themeToggleText">Dark</span>
+    </button>
   </nav>
 
 </header>
