@@ -209,9 +209,9 @@ let lastDirection = null;
 let directionChanges = 0;
 let lastMoveTime = Date.now();
 
-const minDistance = 100;
-const maxPause = 800;
-const changesToBlackout = 36;
+const minDistance = 80;
+const maxPause = 900;
+const changesToBlackout = 28;
 
 document.addEventListener("mousemove", (event) => {
   const now = Date.now();
