@@ -67,13 +67,12 @@ body.dark-mode {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.16);
 }
 
 .brand-icon img {
@@ -195,6 +194,17 @@ body.dark-mode .theme-toggle-icon {
   border-radius: 18px;
   padding: 24px;
   box-shadow: var(--shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card.is-solved {
+  border-color: rgba(15, 118, 110, 0.45);
+  box-shadow: 0 18px 45px rgba(15, 118, 110, 0.13);
+}
+
+.game-card.is-game-over {
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 18px 45px rgba(239, 68, 68, 0.12);
 }
 
 .game-top {
@@ -227,6 +237,10 @@ body.dark-mode .theme-toggle-icon {
   align-items: start;
 }
 
+.board-wrap {
+  min-width: 0;
+}
+
 .board-header {
   display: flex;
   gap: 14px;
@@ -256,6 +270,7 @@ body.dark-mode .theme-toggle-icon {
 
 .sudoku-board {
   width: 100%;
+  max-width: 650px;
   aspect-ratio: 1 / 1;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
@@ -264,6 +279,17 @@ body.dark-mode .theme-toggle-icon {
   overflow: hidden;
   background: var(--blue-dark);
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.sudoku-board.is-locked .cell {
+  cursor: default;
+}
+
+.game-card.is-solved .number-pad button,
+.game-card.is-game-over .number-pad button {
+  cursor: default;
+  opacity: 0.62;
 }
 
 .cell {
@@ -335,6 +361,33 @@ body.dark-mode .theme-toggle-icon {
   color: var(--muted);
   font-weight: 800;
   font-size: 16px;
+  line-height: 1.35;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+}
+
+.message.info {
+  color: var(--muted);
+}
+
+.message.success {
+  color: #0f766e;
+  border-color: rgba(15, 118, 110, 0.22);
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.message.warning {
+  color: #b45309;
+  border-color: rgba(245, 158, 11, 0.28);
+  background: rgba(245, 158, 11, 0.09);
+}
+
+.message.danger {
+  color: var(--error);
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
 }
 
 .side-panel {
@@ -774,6 +827,34 @@ body.dark-mode .status-pill {
   color: #f5c16c;
 }
 
+body.dark-mode .message.success {
+  color: #5eead4;
+  border-color: rgba(94, 234, 212, 0.28);
+  background: rgba(35, 209, 139, 0.11);
+}
+
+body.dark-mode .message.warning {
+  color: #f5c16c;
+  border-color: rgba(245, 193, 108, 0.28);
+  background: rgba(245, 193, 108, 0.1);
+}
+
+body.dark-mode .message.danger {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.28);
+  background: rgba(248, 113, 113, 0.1);
+}
+
+body.dark-mode .game-card.is-solved {
+  border-color: rgba(94, 234, 212, 0.45);
+  box-shadow: 0 18px 45px rgba(35, 209, 139, 0.12);
+}
+
+body.dark-mode .game-card.is-game-over {
+  border-color: rgba(248, 113, 113, 0.5);
+  box-shadow: 0 18px 45px rgba(248, 113, 113, 0.1);
+}
+
 body.dark-mode .seo-card h3 {
   color: var(--text);
 }
@@ -833,18 +914,30 @@ body.dark-mode .primary-btn {
   }
 
   .header-nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
+    gap: 10px;
   }
 
   .nav-item.active {
     display: none;
   }
 
+  .nav-item {
+    min-height: 44px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
   .game-layout {
     grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .sudoku-board {
+    max-width: 640px;
+    margin: 0 auto;
   }
 
   .side-panel {
@@ -867,15 +960,28 @@ body.dark-mode .primary-btn {
 
 @media (max-width: 560px) {
   .app-shell {
-    padding: 16px 10px;
+    padding: 14px 10px 24px;
+  }
+
+  .app-header {
+    padding: 14px;
+  }
+
+  .brand {
+    gap: 10px;
+    min-width: 0;
   }
 
   .hero h2 {
-    font-size: 34px;
+    font-size: 30px;
   }
 
   .hero p {
-    font-size: 16px;
+    font-size: 15px;
+  }
+
+  .hero-play-btn {
+    width: 100%;
   }
 
   .game-card {
@@ -890,7 +996,7 @@ body.dark-mode .primary-btn {
   }
 
   .game-top h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .brand h1 {
@@ -911,8 +1017,8 @@ body.dark-mode .primary-btn {
   }
 
   .info-box {
-    padding: 12px;
-    border-radius: 16px;
+    padding: 10px;
+    border-radius: 12px;
   }
 
   .info-box strong {
@@ -921,6 +1027,20 @@ body.dark-mode .primary-btn {
 
   .sudoku-board {
     border-radius: 10px;
+    border-width: 2px;
+  }
+
+  .cell {
+    font-size: clamp(18px, 7vw, 30px);
+  }
+
+  .cell:nth-child(3n) {
+    border-right-width: 2px;
+  }
+
+  .cell:nth-child(n + 19):nth-child(-n + 27),
+  .cell:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom-width: 2px;
   }
 
   .side-panel {
@@ -936,6 +1056,21 @@ body.dark-mode .primary-btn {
     height: 58px;
     border-radius: 10px;
     font-size: 28px;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .share-btn {
+    height: 48px;
+  }
+
+  .message {
+    font-size: 14px;
+    padding: 9px 10px;
   }
 
   .work-screen {

@@ -71,6 +71,7 @@ const leaderboardList = document.getElementById("leaderboardList");
 const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
 const streakText = document.getElementById("streakText");
 const shareBtn = document.getElementById("shareBtn");
+const gameCard = document.querySelector(".game-card");
 
 let selectedCell = null;
 let selectedIndex = null;
@@ -209,10 +210,11 @@ function createBoard() {
   gameSolved = false;
 
   hideShareButton();
+  setGameState("playing");
 
   errorsEl.textContent = "0/3";
   timerEl.textContent = "00:00";
-  message.textContent = "Select a cell to begin.";
+  setMessage("Select a cell to begin.");
 
   startTimer();
 
@@ -234,6 +236,8 @@ function createBoard() {
 }
 
 function selectCell(cell, index) {
+  if (board.classList.contains("is-locked")) return;
+
   clearHighlights();
 
   selectedCell = cell;
@@ -288,6 +292,29 @@ function canEditSelectedCell() {
   );
 }
 
+function setMessage(text, type = "info") {
+  message.textContent = text;
+  message.classList.remove("success", "warning", "danger", "info");
+  message.classList.add(type);
+}
+
+function setGameState(state) {
+  gameCard.classList.remove("is-solved", "is-game-over");
+  board.classList.remove("is-locked");
+
+  if (state === "solved") {
+    gameCard.classList.add("is-solved");
+    board.classList.add("is-locked");
+    clearHighlights();
+  }
+
+  if (state === "game-over") {
+    gameCard.classList.add("is-game-over");
+    board.classList.add("is-locked");
+    clearHighlights();
+  }
+}
+
 function placeNumber(number) {
   if (!canEditSelectedCell()) return;
 
@@ -303,17 +330,18 @@ function placeNumber(number) {
     errorsEl.textContent = `${errors}/3`;
 
     if (errors >= 3) {
-      message.textContent = "Game over. Try again.";
+      setGameState("game-over");
+      setMessage("Game over. Start a new game to try again.", "danger");
       pauseTimer();
     } else {
-      message.textContent = "Wrong number.";
+      setMessage(`Wrong number. ${3 - errors} mistake${errors === 2 ? "" : "s"} left.`, "warning");
     }
 
     return;
   }
 
   selectedCell.classList.add("correct-pop");
-  message.textContent = "Correct.";
+  setMessage("Correct.", "success");
 
   selectCell(selectedCell, selectedIndex);
   checkIfSolved();
@@ -324,12 +352,13 @@ function eraseSelectedCell() {
 
   selectedCell.textContent = "";
   selectedCell.classList.remove("error", "correct-pop");
-  message.textContent = "Cell cleared.";
+  setMessage("Cell cleared.");
 
   selectCell(selectedCell, selectedIndex);
 }
 
 function moveSelection(rowOffset, colOffset) {
+  if (board.classList.contains("is-locked")) return;
   if (selectedIndex === null) return;
 
   const currentRow = Math.floor(selectedIndex / 9);
@@ -355,9 +384,10 @@ function checkIfSolved() {
 
   if (solved && !gameSolved) {
     gameSolved = true;
+    setGameState("solved");
     pauseTimer();
 
-    message.textContent = `Puzzle solved in ${formatTime(seconds)}.`;
+    setMessage(`Puzzle solved in ${formatTime(seconds)}.`, "success");
 
     saveScore(seconds);
     renderLeaderboard();
@@ -407,7 +437,7 @@ function hideShareButton() {
 
 async function shareResult() {
   const text =
-`I solved Boss Mode Sudoku in ${formatTime(seconds)} 🔥
+`I solved Boss Mode Sudoku in ${formatTime(seconds)} \u{1F525}
 Can you beat me?
 https://bossmodesudoku.netlify.app/`;
 
@@ -458,7 +488,7 @@ function renderLeaderboard() {
 
   scores.forEach((score) => {
     const li = document.createElement("li");
-    li.textContent = `${formatTime(score.time)} · ${score.date}`;
+    li.textContent = `${formatTime(score.time)} - ${score.date}`;
     leaderboardList.appendChild(li);
   });
 }
@@ -516,8 +546,13 @@ newGameBtn.addEventListener("click", createBoard);
 eraseBtn.addEventListener("click", eraseSelectedCell);
 
 checkBtn.addEventListener("click", () => {
+  if (gameCard.classList.contains("is-game-over")) {
+    setMessage("Game over. Start a new game to try again.", "danger");
+    return;
+  }
+
   if (!checkIfSolved()) {
-    message.textContent = "Not complete yet.";
+    setMessage("Not complete yet.", "warning");
   }
 });
 
