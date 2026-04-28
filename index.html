@@ -1,18 +1,27 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Boss Mode Sudoku | The Sudoku That Hides Instantly</title>
+
   <meta
     name="description"
-    content="Play Sudoku. Switch to a fake work dashboard instantly with Boss Mode."
+    content="Play Boss Mode Sudoku online. Solve Sudoku and instantly switch to a fake work dashboard."
   />
+
+  <meta
+    name="keywords"
+    content="sudoku online, sudoku game, boss mode sudoku, office game, hidden game, work mode game"
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <header class="app-header">
+
   <div class="brand">
     <div class="brand-icon">B</div>
 
@@ -26,11 +35,13 @@
     <button class="nav-item active">Daily Puzzle</button>
     <button class="nav-item" id="bossModeBtn">Boss Mode</button>
   </nav>
+
 </header>
 
 <main class="app-shell">
 
   <section class="hero">
+
     <span class="eyebrow">Daily Focus Challenge</span>
 
     <h2>The Sudoku that hides when your boss appears.</h2>
@@ -40,11 +51,13 @@
     </p>
 
     <button class="hero-play-btn" id="playNowBtn">Play Now</button>
+
   </section>
 
   <section class="game-card">
 
     <div class="game-top">
+
       <div>
         <span class="eyebrow">Daily Puzzle</span>
         <h2>Easy Sudoku</h2>
@@ -54,6 +67,7 @@
         <span>🔥</span>
         <strong id="streakText">Streak 0</strong>
       </div>
+
     </div>
 
     <div class="game-layout">
@@ -61,6 +75,7 @@
       <section class="board-wrap">
 
         <div class="board-header">
+
           <div class="info-box">
             <span>Time</span>
             <strong id="timer">00:00</strong>
@@ -70,13 +85,16 @@
             <span>Mistakes</span>
             <strong id="errors">0/3</strong>
           </div>
+
         </div>
 
         <div class="sudoku-board" id="sudokuBoard"></div>
 
         <p class="message" id="message">Select a cell to begin.</p>
 
-        <button id="shareBtn" class="share-btn hidden">Share Result</button>
+        <button id="shareBtn" class="share-btn hidden">
+          Share Result
+        </button>
 
       </section>
 
@@ -116,35 +134,170 @@
         </div>
 
         <div class="leaderboard-box">
+
           <div class="leaderboard-header">
             <div>
               <strong>Leaderboard</strong>
               <span>Best local times</span>
             </div>
+
             <button id="clearLeaderboardBtn">Clear</button>
           </div>
 
           <ol id="leaderboardList" class="leaderboard-list"></ol>
+
         </div>
 
       </aside>
 
     </div>
+
+  </section>
+
+  <!-- SEO SECTION -->
+
+  <section class="seo-section">
+
+    <div class="seo-card">
+      <h3>What is Boss Mode Sudoku?</h3>
+
+      <p>
+        Boss Mode Sudoku is an online Sudoku game that can instantly switch
+        into a professional fake dashboard. Perfect for office breaks,
+        study pauses and quick brain training.
+      </p>
+    </div>
+
+    <div class="seo-card">
+      <h3>How Boss Mode Works</h3>
+
+      <p>
+        Move your mouse left and right several times or click the Boss Mode
+        button. The Sudoku board disappears and a realistic analytics
+        dashboard appears instantly.
+      </p>
+    </div>
+
+    <div class="seo-card">
+      <h3>Why Play Sudoku Daily?</h3>
+
+      <p>
+        Sudoku improves memory, concentration, logical reasoning and mental
+        discipline. Playing a few minutes each day is a powerful habit for
+        your brain.
+      </p>
+    </div>
+
   </section>
 
 </main>
 
+<!-- WORK SCREEN -->
+
 <div class="work-screen" id="blackout">
+
   <div class="work-header">
+
     <div>
       <h2>Performance Dashboard</h2>
       <p>Quarterly analytics overview</p>
     </div>
 
     <button id="restoreBtn">Resume Session</button>
+
   </div>
+
+  <div class="work-grid">
+
+    <div class="work-card">
+      <span>Revenue</span>
+      <strong>$48,920</strong>
+      <p class="positive">+12.4% this month</p>
+    </div>
+
+    <div class="work-card">
+      <span>Tasks</span>
+      <strong>27</strong>
+      <p>8 pending review</p>
+    </div>
+
+    <div class="work-card">
+      <span>Meetings</span>
+      <strong>5</strong>
+      <p>Today</p>
+    </div>
+
+  </div>
+
+  <div class="work-main">
+
+    <div class="work-table">
+
+      <h3>Current Projects</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Status</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Client Report</td>
+            <td>In Progress</td>
+            <td>Today</td>
+          </tr>
+
+          <tr>
+            <td>Budget Review</td>
+            <td>Pending</td>
+            <td>Tomorrow</td>
+          </tr>
+
+          <tr>
+            <td>Marketing Analysis</td>
+            <td>Completed</td>
+            <td>Yesterday</td>
+          </tr>
+
+          <tr>
+            <td>Performance Forecast</td>
+            <td>In Progress</td>
+            <td>Friday</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="work-notes">
+
+      <h3>Internal Notes</h3>
+
+      <p>
+        Final review scheduled for the afternoon. Please update all figures
+        before the next status meeting.
+      </p>
+
+      <div class="fake-chart">
+        <div style="height:42%"></div>
+        <div style="height:65%"></div>
+        <div style="height:54%"></div>
+        <div style="height:78%"></div>
+        <div style="height:90%"></div>
+        <div style="height:70%"></div>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
+```
