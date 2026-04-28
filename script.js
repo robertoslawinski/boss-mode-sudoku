@@ -29,6 +29,9 @@ const errorsEl = document.getElementById("errors");
 const timerEl = document.getElementById("timer");
 const newGameBtn = document.getElementById("newGameBtn");
 const checkBtn = document.getElementById("checkBtn");
+const blackout = document.getElementById("blackout");
+const restoreBtn = document.getElementById("restoreBtn");
+const bossModeBtn = document.getElementById("bossModeBtn");
 
 let selectedCell = null;
 let selectedIndex = null;
@@ -193,17 +196,22 @@ function updateTimer() {
 
 // BOSS MODE
 
-const blackout = document.getElementById("blackout");
-const restoreBtn = document.getElementById("restoreBtn");
+bossModeBtn.addEventListener("click", () => {
+  blackout.classList.add("active");
+});
+
+restoreBtn.addEventListener("click", () => {
+  blackout.classList.remove("active");
+});
 
 let lastX = null;
 let lastDirection = null;
 let directionChanges = 0;
 let lastMoveTime = Date.now();
 
-const minDistance = 35;
-const maxPause = 1200;
-const changesToBlackout = 14;
+const minDistance = 100;
+const maxPause = 800;
+const changesToBlackout = 36;
 
 document.addEventListener("mousemove", (event) => {
   const now = Date.now();
@@ -241,10 +249,6 @@ document.addEventListener("mousemove", (event) => {
     lastDirection = null;
     lastX = null;
   }
-});
-
-restoreBtn.addEventListener("click", () => {
-  blackout.classList.remove("active");
 });
 
 createBoard();
