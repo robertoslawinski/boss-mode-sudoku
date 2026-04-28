@@ -35,6 +35,7 @@ const bossModeBtn = document.getElementById("bossModeBtn");
 const playNowBtn = document.getElementById("playNowBtn");
 const leaderboardList = document.getElementById("leaderboardList");
 const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
+const streakText = document.getElementById("streakText");
 
 let selectedCell = null;
 let selectedIndex = null;
@@ -182,6 +183,7 @@ function checkIfSolved() {
 
     saveScore(seconds);
     renderLeaderboard();
+    updateStreakAfterWin();
   }
 
   return solved;
@@ -263,6 +265,46 @@ clearLeaderboardBtn.addEventListener("click", () => {
   renderLeaderboard();
 });
 
+// STREAK
+
+function getTodayKey() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function getYesterdayKey() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return yesterday.toISOString().split("T")[0];
+}
+
+function loadStreak() {
+  const streak = Number(localStorage.getItem("bossModeSudokuStreak")) || 0;
+  streakText.textContent = `Streak ${streak}`;
+}
+
+function updateStreakAfterWin() {
+  const today = getTodayKey();
+  const yesterday = getYesterdayKey();
+
+  const lastPlayedDate = localStorage.getItem("bossModeSudokuLastPlayed");
+  let streak = Number(localStorage.getItem("bossModeSudokuStreak")) || 0;
+
+  if (lastPlayedDate === today) {
+    return;
+  }
+
+  if (lastPlayedDate === yesterday) {
+    streak++;
+  } else {
+    streak = 1;
+  }
+
+  localStorage.setItem("bossModeSudokuLastPlayed", today);
+  localStorage.setItem("bossModeSudokuStreak", streak);
+
+  streakText.textContent = `Streak ${streak}`;
+}
+
 // BOSS MODE
 
 bossModeBtn.addEventListener("click", () => {
@@ -320,4 +362,5 @@ document.addEventListener("mousemove", (event) => {
   }
 });
 
+loadStreak();
 createBoard();
