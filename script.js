@@ -12,14 +12,14 @@ const puzzles = [
       [9, 4, 0, 0, 0, 7, 3, 0, 0]
     ],
     solution: [
-      [4, 6, 9, 3, 2, 8, 1, 5, 7],
-      [5, 8, 1, 4, 7, 9, 6, 2, 3],
-      [2, 7, 3, 5, 6, 1, 9, 4, 8],
-      [6, 9, 4, 8, 3, 2, 7, 1, 5],
+      [2, 6, 9, 3, 7, 8, 1, 4, 5],
+      [5, 8, 1, 4, 2, 9, 6, 7, 3],
+      [4, 7, 3, 5, 6, 1, 2, 9, 8],
+      [6, 9, 4, 8, 3, 2, 5, 1, 7],
       [8, 1, 2, 7, 4, 5, 9, 3, 6],
       [3, 5, 7, 1, 9, 6, 8, 2, 4],
-      [1, 3, 5, 9, 8, 4, 2, 7, 6],
-      [7, 2, 8, 6, 1, 3, 4, 9, 5],
+      [1, 3, 5, 9, 8, 4, 7, 6, 2],
+      [7, 2, 8, 6, 1, 3, 4, 5, 9],
       [9, 4, 6, 2, 5, 7, 3, 8, 1]
     ]
   },
@@ -58,6 +58,7 @@ const numberPad = document.getElementById("numberPad");
 const message = document.getElementById("message");
 const errorsEl = document.getElementById("errors");
 const timerEl = document.getElementById("timer");
+const eraseBtn = document.getElementById("eraseBtn");
 const newGameBtn = document.getElementById("newGameBtn");
 const checkBtn = document.getElementById("checkBtn");
 const blackout = document.getElementById("blackout");
@@ -74,7 +75,89 @@ let selectedIndex = null;
 let errors = 0;
 let seconds = 0;
 let timerInterval = null;
+let timerPausedByBossMode = false;
 let gameSolved = false;
+
+function hasDigitsOneToNine(values) {
+  return (
+    values.length === 9 &&
+    new Set(values).size === 9 &&
+    values.every((value) => value >= 1 && value <= 9)
+  );
+}
+
+function validatePuzzleSet({ puzzle, solution }, puzzleIndex) {
+  const label = `Puzzle ${puzzleIndex + 1}`;
+
+  if (!Array.isArray(puzzle) || !Array.isArray(solution)) {
+    throw new Error(`${label} must include puzzle and solution grids.`);
+  }
+
+  if (puzzle.length !== 9 || solution.length !== 9) {
+    throw new Error(`${label} must have 9 rows in both grids.`);
+  }
+
+  for (let row = 0; row < 9; row++) {
+    if (puzzle[row].length !== 9 || solution[row].length !== 9) {
+      throw new Error(`${label} row ${row + 1} must have 9 columns.`);
+    }
+
+    if (!hasDigitsOneToNine(solution[row])) {
+      throw new Error(`${label} solution row ${row + 1} is invalid.`);
+    }
+  }
+
+  for (let col = 0; col < 9; col++) {
+    const column = solution.map((row) => row[col]);
+
+    if (!hasDigitsOneToNine(column)) {
+      throw new Error(`${label} solution column ${col + 1} is invalid.`);
+    }
+  }
+
+  for (let blockRow = 0; blockRow < 3; blockRow++) {
+    for (let blockCol = 0; blockCol < 3; blockCol++) {
+      const block = [];
+
+      for (let row = blockRow * 3; row < blockRow * 3 + 3; row++) {
+        for (let col = blockCol * 3; col < blockCol * 3 + 3; col++) {
+          block.push(solution[row][col]);
+        }
+      }
+
+      if (!hasDigitsOneToNine(block)) {
+        throw new Error(
+          `${label} solution block ${blockRow + 1},${blockCol + 1} is invalid.`
+        );
+      }
+    }
+  }
+
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      const puzzleValue = puzzle[row][col];
+      const solutionValue = solution[row][col];
+
+      if (puzzleValue < 0 || puzzleValue > 9) {
+        throw new Error(`${label} puzzle value at ${row + 1},${col + 1} is invalid.`);
+      }
+
+      if (puzzleValue !== 0 && puzzleValue !== solutionValue) {
+        throw new Error(
+          `${label} fixed value at ${row + 1},${col + 1} does not match solution.`
+        );
+      }
+    }
+  }
+}
+
+function validatePuzzles() {
+  if (!Array.isArray(puzzles) || puzzles.length === 0) {
+    throw new Error("At least one Sudoku puzzle is required.");
+  }
+
+  puzzles.forEach(validatePuzzleSet);
+}
 
 function chooseRandomPuzzle() {
   let randomIndex = Math.floor(Math.random() * puzzles.length);
@@ -98,6 +181,7 @@ function createBoard() {
   selectedIndex = null;
   errors = 0;
   seconds = 0;
+  timerPausedByBossMode = false;
   gameSolved = false;
 
   hideShareButton();
@@ -106,8 +190,7 @@ function createBoard() {
   timerEl.textContent = "00:00";
   message.textContent = "Select a cell to begin.";
 
-  clearInterval(timerInterval);
-  timerInterval = setInterval(updateTimer, 1000);
+  startTimer();
 
   currentPuzzle.flat().forEach((value, index) => {
     const cell = document.createElement("div");
@@ -168,40 +251,74 @@ function clearHighlights() {
 
 numberPad.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", () => {
-    if (gameSolved) return;
-    if (!selectedCell) return;
-    if (selectedCell.classList.contains("fixed")) return;
-    if (errors >= 3) return;
-
-    const number = Number(button.textContent);
-    const row = Math.floor(selectedIndex / 9);
-    const col = selectedIndex % 9;
-
-    selectedCell.textContent = number;
-    selectedCell.classList.remove("error", "correct-pop");
-
-    if (number !== currentSolution[row][col]) {
-      selectedCell.classList.add("error");
-      errors++;
-      errorsEl.textContent = `${errors}/3`;
-
-      if (errors >= 3) {
-        message.textContent = "Game over. Try again.";
-        clearInterval(timerInterval);
-      } else {
-        message.textContent = "Wrong number.";
-      }
-
-      return;
-    }
-
-    selectedCell.classList.add("correct-pop");
-    message.textContent = "Correct.";
-
-    selectCell(selectedCell, selectedIndex);
-    checkIfSolved();
+    placeNumber(Number(button.textContent));
   });
 });
+
+function canEditSelectedCell() {
+  return (
+    selectedCell &&
+    !selectedCell.classList.contains("fixed") &&
+    !gameSolved &&
+    errors < 3
+  );
+}
+
+function placeNumber(number) {
+  if (!canEditSelectedCell()) return;
+
+  const row = Math.floor(selectedIndex / 9);
+  const col = selectedIndex % 9;
+
+  selectedCell.textContent = number;
+  selectedCell.classList.remove("error", "correct-pop");
+
+  if (number !== currentSolution[row][col]) {
+    selectedCell.classList.add("error");
+    errors++;
+    errorsEl.textContent = `${errors}/3`;
+
+    if (errors >= 3) {
+      message.textContent = "Game over. Try again.";
+      pauseTimer();
+    } else {
+      message.textContent = "Wrong number.";
+    }
+
+    return;
+  }
+
+  selectedCell.classList.add("correct-pop");
+  message.textContent = "Correct.";
+
+  selectCell(selectedCell, selectedIndex);
+  checkIfSolved();
+}
+
+function eraseSelectedCell() {
+  if (!canEditSelectedCell()) return;
+
+  selectedCell.textContent = "";
+  selectedCell.classList.remove("error", "correct-pop");
+  message.textContent = "Cell cleared.";
+
+  selectCell(selectedCell, selectedIndex);
+}
+
+function moveSelection(rowOffset, colOffset) {
+  if (selectedIndex === null) return;
+
+  const currentRow = Math.floor(selectedIndex / 9);
+  const currentCol = selectedIndex % 9;
+  const nextRow = Math.min(8, Math.max(0, currentRow + rowOffset));
+  const nextCol = Math.min(8, Math.max(0, currentCol + colOffset));
+  const nextIndex = nextRow * 9 + nextCol;
+  const nextCell = board.querySelector(`[data-index="${nextIndex}"]`);
+
+  if (nextCell) {
+    selectCell(nextCell, nextIndex);
+  }
+}
 
 function checkIfSolved() {
   const cells = [...document.querySelectorAll(".cell")];
@@ -214,7 +331,7 @@ function checkIfSolved() {
 
   if (solved && !gameSolved) {
     gameSolved = true;
-    clearInterval(timerInterval);
+    pauseTimer();
 
     message.textContent = `Puzzle solved in ${formatTime(seconds)}.`;
 
@@ -230,6 +347,22 @@ function checkIfSolved() {
 function updateTimer() {
   seconds++;
   timerEl.textContent = formatTime(seconds);
+}
+
+function startTimer() {
+  pauseTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function resumeTimer() {
+  if (!timerInterval && !gameSolved && errors < 3) {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
 }
 
 function formatTime(totalSeconds) {
@@ -356,6 +489,8 @@ function updateStreakAfterWin() {
 
 newGameBtn.addEventListener("click", createBoard);
 
+eraseBtn.addEventListener("click", eraseSelectedCell);
+
 checkBtn.addEventListener("click", () => {
   if (!checkIfSolved()) {
     message.textContent = "Not complete yet.";
@@ -370,12 +505,61 @@ playNowBtn.addEventListener("click", () => {
 
 // BOSS MODE
 
-bossModeBtn.addEventListener("click", () => {
-  blackout.classList.add("active");
-});
+function activateBossMode() {
+  if (blackout.classList.contains("active")) return;
 
-restoreBtn.addEventListener("click", () => {
+  blackout.classList.add("active");
+  timerPausedByBossMode = Boolean(timerInterval);
+  pauseTimer();
+}
+
+function restoreGame() {
   blackout.classList.remove("active");
+  if (timerPausedByBossMode) {
+    resumeTimer();
+    timerPausedByBossMode = false;
+  }
+}
+
+bossModeBtn.addEventListener("click", activateBossMode);
+
+restoreBtn.addEventListener("click", restoreGame);
+
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  if (blackout.classList.contains("active")) {
+    if (key === "Escape") {
+      restoreGame();
+    }
+    return;
+  }
+
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+  if (/^[1-9]$/.test(key)) {
+    event.preventDefault();
+    placeNumber(Number(key));
+    return;
+  }
+
+  if (key === "Backspace" || key === "Delete" || key === "0") {
+    event.preventDefault();
+    eraseSelectedCell();
+    return;
+  }
+
+  const moves = {
+    ArrowUp: [-1, 0],
+    ArrowRight: [0, 1],
+    ArrowDown: [1, 0],
+    ArrowLeft: [0, -1]
+  };
+
+  if (moves[key]) {
+    event.preventDefault();
+    moveSelection(...moves[key]);
+  }
 });
 
 let lastX = null;
@@ -417,12 +601,13 @@ document.addEventListener("mousemove", (event) => {
   lastX = event.clientX;
 
   if (directionChanges >= changesToBlackout) {
-    blackout.classList.add("active");
+    activateBossMode();
     directionChanges = 0;
     lastDirection = null;
     lastX = null;
   }
 });
 
+validatePuzzles();
 loadStreak();
 createBoard();
