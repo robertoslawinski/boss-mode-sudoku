@@ -32,6 +32,7 @@ const checkBtn = document.getElementById("checkBtn");
 const blackout = document.getElementById("blackout");
 const restoreBtn = document.getElementById("restoreBtn");
 const bossModeBtn = document.getElementById("bossModeBtn");
+const playNowBtn = document.getElementById("playNowBtn");
 
 let selectedCell = null;
 let selectedIndex = null;
@@ -64,7 +65,6 @@ function createBoard() {
     }
 
     cell.addEventListener("click", () => selectCell(cell, index));
-
     board.appendChild(cell);
   });
 }
@@ -184,6 +184,13 @@ checkBtn.addEventListener("click", () => {
 });
 
 newGameBtn.addEventListener("click", createBoard);
+
+playNowBtn.addEventListener("click", () => {
+  document.querySelector(".game-card").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+});
 
 function updateTimer() {
   seconds++;

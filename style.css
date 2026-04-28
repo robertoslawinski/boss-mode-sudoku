@@ -708,4 +708,24 @@ body {
   .work-header h2 {
     font-size: 28px;
   }
+
+  .hero-play-btn {
+  margin-top: 22px;
+  height: 58px;
+  padding: 0 34px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hero-play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 44px rgba(37, 99, 235, 0.32);
+}
 }

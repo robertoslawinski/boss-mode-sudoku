@@ -2,202 +2,220 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Boss Mode Sudoku | The Sudoku That Hides Instantly</title>
   <meta
     name="description"
     content="Play Sudoku. Switch to a fake work dashboard instantly with Boss Mode."
   />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header class="app-header">
-    <div class="brand">
-      <div class="brand-icon">9</div>
-      <div>
-        <h1>Boss Mode Sudoku</h1>
-        <p>Play Sudoku. Switch to work mode instantly.</p>
-      </div>
-    </div>
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-icon">B</div>
 
-    <nav class="header-nav">
-      <button class="nav-item active">Daily Puzzle</button>
-      <button class="nav-item" id="bossModeBtn">Boss Mode</button>
-    </nav>
-  </header>
-
-  <main class="app-shell">
-    <section class="hero">
-      <span class="eyebrow">Daily Focus Challenge</span>
-      <h2>The Sudoku that hides when your boss appears.</h2>
-      <p>
-        Train your focus, solve the puzzle, and activate Boss Mode by moving
-        your mouse left and right several times.
-      </p>
-    </section>
-
-    <section class="game-card">
-      <div class="game-top">
-        <div>
-          <span class="eyebrow">Daily Puzzle</span>
-          <h2>Easy Sudoku</h2>
-        </div>
-
-        <div class="status-pill">
-          <span>🔥</span>
-          <strong>Streak 1</strong>
-        </div>
-      </div>
-
-      <div class="game-layout">
-        <section class="board-wrap">
-          <div class="board-header">
-            <div class="info-box">
-              <span>Time</span>
-              <strong id="timer">00:00</strong>
-            </div>
-
-            <div class="info-box">
-              <span>Mistakes</span>
-              <strong id="errors">0/3</strong>
-            </div>
-          </div>
-
-          <div class="sudoku-board" id="sudokuBoard"></div>
-
-          <p class="message" id="message">Select a cell to begin.</p>
-        </section>
-
-        <aside class="side-panel">
-          <div class="panel-title">
-            <h3>Numbers</h3>
-            <p>Click a cell and choose a number.</p>
-          </div>
-
-          <div class="number-pad" id="numberPad">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-          </div>
-
-          <div class="actions">
-            <button class="primary-btn" id="newGameBtn">New Game</button>
-            <button class="secondary-btn" id="checkBtn">Check Puzzle</button>
-          </div>
-
-          <div class="focus-box">
-            <div>
-              <strong>Boss Mode</strong>
-              <span>
-                Move the mouse left and right several times or click Boss Mode to open the work dashboard.
-              </span>
-            </div>
-            <div class="focus-dot"></div>
-          </div>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <div class="work-screen" id="blackout">
-    <div class="work-header">
-      <div>
-        <h2>Performance Dashboard</h2>
-        <p>Quarterly analytics overview</p>
-      </div>
-
-      <button id="restoreBtn">Resume Session</button>
-    </div>
-
-    <div class="work-grid">
-      <div class="work-card">
-        <span>Revenue</span>
-        <strong>$48,920</strong>
-        <p class="positive">+12.4% this month</p>
-      </div>
-
-      <div class="work-card">
-        <span>Tasks</span>
-        <strong>27</strong>
-        <p>8 pending review</p>
-      </div>
-
-      <div class="work-card">
-        <span>Meetings</span>
-        <strong>5</strong>
-        <p>Today</p>
-      </div>
-    </div>
-
-    <div class="work-main">
-      <div class="work-table">
-        <h3>Current Projects</h3>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Project</th>
-              <th>Status</th>
-              <th>Deadline</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>Client Report</td>
-              <td><span class="badge blue">In Progress</span></td>
-              <td>Today</td>
-            </tr>
-
-            <tr>
-              <td>Budget Review</td>
-              <td><span class="badge orange">Pending</span></td>
-              <td>Tomorrow</td>
-            </tr>
-
-            <tr>
-              <td>Marketing Analysis</td>
-              <td><span class="badge green">Completed</span></td>
-              <td>Yesterday</td>
-            </tr>
-
-            <tr>
-              <td>Performance Forecast</td>
-              <td><span class="badge blue">In Progress</span></td>
-              <td>Friday</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="work-notes">
-        <h3>Internal Notes</h3>
-        <p>
-          Final review scheduled for the afternoon. Please update all figures
-          before the next status meeting.
-        </p>
-
-        <div class="fake-chart">
-          <div style="height: 42%"></div>
-          <div style="height: 65%"></div>
-          <div style="height: 54%"></div>
-          <div style="height: 78%"></div>
-          <div style="height: 90%"></div>
-          <div style="height: 70%"></div>
-        </div>
-      </div>
+    <div>
+      <h1>Boss Mode Sudoku</h1>
+      <p>Play Sudoku. Switch to work mode instantly.</p>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <nav class="header-nav">
+    <button class="nav-item active">Daily Puzzle</button>
+    <button class="nav-item" id="bossModeBtn">Boss Mode</button>
+  </nav>
+</header>
+
+<main class="app-shell">
+
+  <section class="hero">
+    <span class="eyebrow">Daily Focus Challenge</span>
+
+    <h2>The Sudoku that hides when your boss appears.</h2>
+
+    <p>
+      Train your focus, solve the puzzle, and instantly switch to a fake work dashboard.
+    </p>
+
+    <button class="hero-play-btn" id="playNowBtn">Play Now</button>
+  </section>
+
+  <section class="game-card">
+
+    <div class="game-top">
+      <div>
+        <span class="eyebrow">Daily Puzzle</span>
+        <h2>Easy Sudoku</h2>
+      </div>
+
+      <div class="status-pill">
+        <span>🔥</span>
+        <strong>Streak 1</strong>
+      </div>
+    </div>
+
+    <div class="game-layout">
+
+      <section class="board-wrap">
+
+        <div class="board-header">
+          <div class="info-box">
+            <span>Time</span>
+            <strong id="timer">00:00</strong>
+          </div>
+
+          <div class="info-box">
+            <span>Mistakes</span>
+            <strong id="errors">0/3</strong>
+          </div>
+        </div>
+
+        <div class="sudoku-board" id="sudokuBoard"></div>
+
+        <p class="message" id="message">Select a cell to begin.</p>
+
+      </section>
+
+      <aside class="side-panel">
+
+        <div class="panel-title">
+          <h3>Numbers</h3>
+          <p>Click a cell and choose a number.</p>
+        </div>
+
+        <div class="number-pad" id="numberPad">
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>5</button>
+          <button>6</button>
+          <button>7</button>
+          <button>8</button>
+          <button>9</button>
+        </div>
+
+        <div class="actions">
+          <button class="primary-btn" id="newGameBtn">New Game</button>
+          <button class="secondary-btn" id="checkBtn">Check Puzzle</button>
+        </div>
+
+        <div class="focus-box">
+          <div>
+            <strong>Boss Mode</strong>
+            <span>
+              Move the mouse left and right several times or click Boss Mode.
+            </span>
+          </div>
+
+          <div class="focus-dot"></div>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<div class="work-screen" id="blackout">
+
+  <div class="work-header">
+    <div>
+      <h2>Performance Dashboard</h2>
+      <p>Quarterly analytics overview</p>
+    </div>
+
+    <button id="restoreBtn">Resume Session</button>
+  </div>
+
+  <div class="work-grid">
+
+    <div class="work-card">
+      <span>Revenue</span>
+      <strong>$48,920</strong>
+      <p class="positive">+12.4% this month</p>
+    </div>
+
+    <div class="work-card">
+      <span>Tasks</span>
+      <strong>27</strong>
+      <p>8 pending review</p>
+    </div>
+
+    <div class="work-card">
+      <span>Meetings</span>
+      <strong>5</strong>
+      <p>Today</p>
+    </div>
+
+  </div>
+
+  <div class="work-main">
+
+    <div class="work-table">
+      <h3>Current Projects</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Status</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Client Report</td>
+            <td><span class="badge blue">In Progress</span></td>
+            <td>Today</td>
+          </tr>
+
+          <tr>
+            <td>Budget Review</td>
+            <td><span class="badge orange">Pending</span></td>
+            <td>Tomorrow</td>
+          </tr>
+
+          <tr>
+            <td>Marketing Analysis</td>
+            <td><span class="badge green">Completed</span></td>
+            <td>Yesterday</td>
+          </tr>
+
+          <tr>
+            <td>Performance Forecast</td>
+            <td><span class="badge blue">In Progress</span></td>
+            <td>Friday</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="work-notes">
+      <h3>Internal Notes</h3>
+
+      <p>
+        Final review scheduled for the afternoon. Please update all figures before the next status meeting.
+      </p>
+
+      <div class="fake-chart">
+        <div style="height:42%"></div>
+        <div style="height:65%"></div>
+        <div style="height:54%"></div>
+        <div style="height:78%"></div>
+        <div style="height:90%"></div>
+        <div style="height:70%"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
