@@ -33,12 +33,15 @@ const blackout = document.getElementById("blackout");
 const restoreBtn = document.getElementById("restoreBtn");
 const bossModeBtn = document.getElementById("bossModeBtn");
 const playNowBtn = document.getElementById("playNowBtn");
+const leaderboardList = document.getElementById("leaderboardList");
+const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
 
 let selectedCell = null;
 let selectedIndex = null;
 let errors = 0;
 let seconds = 0;
 let timerInterval = null;
+let gameSolved = false;
 
 function createBoard() {
   board.innerHTML = "";
@@ -46,6 +49,7 @@ function createBoard() {
   selectedIndex = null;
   errors = 0;
   seconds = 0;
+  gameSolved = false;
 
   errorsEl.textContent = "0/3";
   timerEl.textContent = "00:00";
@@ -67,6 +71,8 @@ function createBoard() {
     cell.addEventListener("click", () => selectCell(cell, index));
     board.appendChild(cell);
   });
+
+  renderLeaderboard();
 }
 
 function selectCell(cell, index) {
@@ -112,6 +118,8 @@ function clearHighlights() {
 
 numberPad.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", () => {
+    if (gameSolved) return;
+
     if (!selectedCell) {
       message.textContent = "Select a cell first.";
       return;
@@ -167,9 +175,13 @@ function checkIfSolved() {
     return Number(cell.textContent) === solution[row][col];
   });
 
-  if (solved) {
-    message.textContent = `Puzzle solved in ${timerEl.textContent}.`;
+  if (solved && !gameSolved) {
+    gameSolved = true;
     clearInterval(timerInterval);
+    message.textContent = `Puzzle solved in ${formatTime(seconds)}.`;
+
+    saveScore(seconds);
+    renderLeaderboard();
   }
 
   return solved;
@@ -194,12 +206,62 @@ playNowBtn.addEventListener("click", () => {
 
 function updateTimer() {
   seconds++;
-
-  const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const remainingSeconds = String(seconds % 60).padStart(2, "0");
-
-  timerEl.textContent = `${minutes}:${remainingSeconds}`;
+  timerEl.textContent = formatTime(seconds);
 }
+
+function formatTime(totalSeconds) {
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const remainingSeconds = String(totalSeconds % 60).padStart(2, "0");
+
+  return `${minutes}:${remainingSeconds}`;
+}
+
+// LEADERBOARD
+
+function getScores() {
+  return JSON.parse(localStorage.getItem("bossModeSudokuScores")) || [];
+}
+
+function saveScore(timeInSeconds) {
+  const scores = getScores();
+
+  scores.push({
+    time: timeInSeconds,
+    date: new Date().toLocaleDateString()
+  });
+
+  scores.sort((a, b) => a.time - b.time);
+
+  localStorage.setItem(
+    "bossModeSudokuScores",
+    JSON.stringify(scores.slice(0, 5))
+  );
+}
+
+function renderLeaderboard() {
+  const scores = getScores();
+
+  leaderboardList.innerHTML = "";
+
+  if (scores.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "leaderboard-empty";
+    empty.textContent = "No scores yet. Solve the puzzle first.";
+    leaderboardList.appendChild(empty);
+    return;
+  }
+
+  scores.forEach((score) => {
+    const item = document.createElement("li");
+    item.textContent = `${formatTime(score.time)} · ${score.date}`;
+    leaderboardList.appendChild(item);
+  });
+}
+
+clearLeaderboardBtn.addEventListener("click", () => {
+  localStorage.removeItem("bossModeSudokuScores");
+  renderLeaderboard();
+});
 
 // BOSS MODE
 
