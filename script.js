@@ -46,78 +46,6 @@ const puzzles = [
       [2, 8, 7, 4, 1, 9, 6, 3, 5],
       [3, 4, 5, 2, 8, 6, 1, 7, 9]
     ]
-  },
-  {
-    puzzle: [
-      [0, 0, 0, 2, 6, 0, 7, 0, 1],
-      [6, 8, 0, 0, 7, 0, 0, 9, 0],
-      [1, 9, 0, 0, 0, 4, 5, 0, 0],
-      [8, 2, 0, 1, 0, 0, 0, 4, 0],
-      [0, 0, 4, 6, 0, 2, 9, 0, 0],
-      [0, 5, 0, 0, 0, 3, 0, 2, 8],
-      [0, 0, 9, 3, 0, 0, 0, 7, 4],
-      [0, 4, 0, 0, 5, 0, 0, 3, 6],
-      [7, 0, 3, 0, 1, 8, 0, 0, 0]
-    ],
-    solution: [
-      [4, 3, 5, 2, 6, 9, 7, 8, 1],
-      [6, 8, 2, 5, 7, 1, 4, 9, 3],
-      [1, 9, 7, 8, 3, 4, 5, 6, 2],
-      [8, 2, 6, 1, 9, 5, 3, 4, 7],
-      [3, 7, 4, 6, 8, 2, 9, 1, 5],
-      [9, 5, 1, 7, 4, 3, 6, 2, 8],
-      [5, 1, 9, 3, 2, 6, 8, 7, 4],
-      [2, 4, 8, 9, 5, 7, 1, 3, 6],
-      [7, 6, 3, 4, 1, 8, 2, 5, 9]
-    ]
-  },
-  {
-    puzzle: [
-      [0, 2, 0, 6, 0, 8, 0, 0, 0],
-      [5, 8, 0, 0, 0, 9, 7, 0, 0],
-      [0, 0, 0, 0, 4, 0, 0, 0, 0],
-      [3, 7, 0, 0, 0, 0, 5, 0, 0],
-      [6, 0, 0, 0, 0, 0, 0, 0, 4],
-      [0, 0, 8, 0, 0, 0, 0, 1, 3],
-      [0, 0, 0, 0, 2, 0, 0, 0, 0],
-      [0, 0, 9, 8, 0, 0, 0, 3, 6],
-      [0, 0, 0, 3, 0, 6, 0, 9, 0]
-    ],
-    solution: [
-      [1, 2, 3, 6, 7, 8, 9, 4, 5],
-      [5, 8, 4, 2, 3, 9, 7, 6, 1],
-      [9, 6, 7, 1, 4, 5, 3, 2, 8],
-      [3, 7, 2, 4, 6, 1, 5, 8, 9],
-      [6, 9, 1, 5, 8, 3, 2, 7, 4],
-      [4, 5, 8, 7, 9, 2, 6, 1, 3],
-      [8, 3, 6, 9, 2, 4, 1, 5, 7],
-      [2, 1, 9, 8, 5, 7, 4, 3, 6],
-      [7, 4, 5, 3, 1, 6, 8, 9, 2]
-    ]
-  },
-  {
-    puzzle: [
-      [0, 0, 5, 3, 0, 0, 0, 0, 0],
-      [8, 0, 0, 0, 0, 0, 0, 2, 0],
-      [0, 7, 0, 0, 1, 0, 5, 0, 0],
-      [4, 0, 0, 0, 0, 5, 3, 0, 0],
-      [0, 1, 0, 0, 7, 0, 0, 0, 6],
-      [0, 0, 3, 2, 0, 0, 0, 8, 0],
-      [0, 6, 0, 5, 0, 0, 0, 0, 9],
-      [0, 0, 4, 0, 0, 0, 0, 3, 0],
-      [0, 0, 0, 0, 0, 9, 7, 0, 0]
-    ],
-    solution: [
-      [1, 4, 5, 3, 2, 7, 6, 9, 8],
-      [8, 3, 9, 6, 5, 4, 1, 2, 7],
-      [6, 7, 2, 9, 1, 8, 5, 4, 3],
-      [4, 9, 6, 1, 8, 5, 3, 7, 2],
-      [2, 1, 8, 4, 7, 3, 9, 5, 6],
-      [7, 5, 3, 2, 9, 6, 4, 8, 1],
-      [3, 6, 7, 5, 4, 2, 8, 1, 9],
-      [9, 8, 4, 7, 6, 1, 2, 3, 5],
-      [5, 2, 1, 8, 3, 9, 7, 6, 4]
-    ]
   }
 ];
 
@@ -139,6 +67,7 @@ const playNowBtn = document.getElementById("playNowBtn");
 const leaderboardList = document.getElementById("leaderboardList");
 const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
 const streakText = document.getElementById("streakText");
+const shareBtn = document.getElementById("shareBtn");
 
 let selectedCell = null;
 let selectedIndex = null;
@@ -170,6 +99,8 @@ function createBoard() {
   errors = 0;
   seconds = 0;
   gameSolved = false;
+
+  hideShareButton();
 
   errorsEl.textContent = "0/3";
   timerEl.textContent = "00:00";
@@ -213,12 +144,11 @@ function selectCell(cell, index) {
     const blockRow = Math.floor(row / 3);
     const blockCol = Math.floor(col / 3);
 
-    const sameRow = row === selectedRow;
-    const sameCol = col === selectedCol;
-    const sameBlock =
-      blockRow === selectedBlockRow && blockCol === selectedBlockCol;
-
-    if (sameRow || sameCol || sameBlock) {
+    if (
+      row === selectedRow ||
+      col === selectedCol ||
+      (blockRow === selectedBlockRow && blockCol === selectedBlockCol)
+    ) {
       currentCell.classList.add("related");
     }
 
@@ -239,21 +169,9 @@ function clearHighlights() {
 numberPad.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", () => {
     if (gameSolved) return;
-
-    if (!selectedCell) {
-      message.textContent = "Select a cell first.";
-      return;
-    }
-
-    if (selectedCell.classList.contains("fixed")) {
-      message.textContent = "This cell is part of the puzzle.";
-      return;
-    }
-
-    if (errors >= 3) {
-      message.textContent = "Game over. Click New Game.";
-      return;
-    }
+    if (!selectedCell) return;
+    if (selectedCell.classList.contains("fixed")) return;
+    if (errors >= 3) return;
 
     const number = Number(button.textContent);
     const row = Math.floor(selectedIndex / 9);
@@ -271,14 +189,14 @@ numberPad.querySelectorAll("button").forEach((button) => {
         message.textContent = "Game over. Try again.";
         clearInterval(timerInterval);
       } else {
-        message.textContent = "Wrong number. Stay focused.";
+        message.textContent = "Wrong number.";
       }
 
       return;
     }
 
     selectedCell.classList.add("correct-pop");
-    message.textContent = "Correct. Keep going.";
+    message.textContent = "Correct.";
 
     selectCell(selectedCell, selectedIndex);
     checkIfSolved();
@@ -291,39 +209,23 @@ function checkIfSolved() {
   const solved = cells.every((cell, index) => {
     const row = Math.floor(index / 9);
     const col = index % 9;
-
     return Number(cell.textContent) === currentSolution[row][col];
   });
 
   if (solved && !gameSolved) {
     gameSolved = true;
     clearInterval(timerInterval);
+
     message.textContent = `Puzzle solved in ${formatTime(seconds)}.`;
 
     saveScore(seconds);
     renderLeaderboard();
     updateStreakAfterWin();
+    showShareButton();
   }
 
   return solved;
 }
-
-checkBtn.addEventListener("click", () => {
-  const solved = checkIfSolved();
-
-  if (!solved) {
-    message.textContent = "Not complete yet. Keep going.";
-  }
-});
-
-newGameBtn.addEventListener("click", createBoard);
-
-playNowBtn.addEventListener("click", () => {
-  document.querySelector(".game-card").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-});
 
 function updateTimer() {
   seconds++;
@@ -331,11 +233,39 @@ function updateTimer() {
 }
 
 function formatTime(totalSeconds) {
-  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-  const remainingSeconds = String(totalSeconds % 60).padStart(2, "0");
-
-  return `${minutes}:${remainingSeconds}`;
+  const m = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const s = String(totalSeconds % 60).padStart(2, "0");
+  return `${m}:${s}`;
 }
+
+// SHARE
+
+function showShareButton() {
+  shareBtn.classList.remove("hidden");
+}
+
+function hideShareButton() {
+  shareBtn.classList.add("hidden");
+}
+
+async function shareResult() {
+  const text =
+`I solved Boss Mode Sudoku in ${formatTime(seconds)} 🔥
+Can you beat me?
+https://bossmodesudoku.netlify.app/`;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    shareBtn.textContent = "Copied!";
+    setTimeout(() => {
+      shareBtn.textContent = "Share Result";
+    }, 1500);
+  } catch {
+    alert(text);
+  }
+}
+
+shareBtn.addEventListener("click", shareResult);
 
 // LEADERBOARD
 
@@ -343,11 +273,11 @@ function getScores() {
   return JSON.parse(localStorage.getItem("bossModeSudokuScores")) || [];
 }
 
-function saveScore(timeInSeconds) {
+function saveScore(time) {
   const scores = getScores();
 
   scores.push({
-    time: timeInSeconds,
+    time,
     date: new Date().toLocaleDateString()
   });
 
@@ -361,21 +291,18 @@ function saveScore(timeInSeconds) {
 
 function renderLeaderboard() {
   const scores = getScores();
-
   leaderboardList.innerHTML = "";
 
   if (scores.length === 0) {
-    const empty = document.createElement("p");
-    empty.className = "leaderboard-empty";
-    empty.textContent = "No scores yet. Solve the puzzle first.";
-    leaderboardList.appendChild(empty);
+    leaderboardList.innerHTML =
+      `<p class="leaderboard-empty">No scores yet.</p>`;
     return;
   }
 
   scores.forEach((score) => {
-    const item = document.createElement("li");
-    item.textContent = `${formatTime(score.time)} · ${score.date}`;
-    leaderboardList.appendChild(item);
+    const li = document.createElement("li");
+    li.textContent = `${formatTime(score.time)} · ${score.date}`;
+    leaderboardList.appendChild(li);
   });
 }
 
@@ -391,9 +318,9 @@ function getTodayKey() {
 }
 
 function getYesterdayKey() {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toISOString().split("T")[0];
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().split("T")[0];
 }
 
 function loadStreak() {
@@ -405,14 +332,15 @@ function updateStreakAfterWin() {
   const today = getTodayKey();
   const yesterday = getYesterdayKey();
 
-  const lastPlayedDate = localStorage.getItem("bossModeSudokuLastPlayed");
-  let streak = Number(localStorage.getItem("bossModeSudokuStreak")) || 0;
+  const lastPlayed =
+    localStorage.getItem("bossModeSudokuLastPlayed");
 
-  if (lastPlayedDate === today) {
-    return;
-  }
+  let streak =
+    Number(localStorage.getItem("bossModeSudokuStreak")) || 0;
 
-  if (lastPlayedDate === yesterday) {
+  if (lastPlayed === today) return;
+
+  if (lastPlayed === yesterday) {
     streak++;
   } else {
     streak = 1;
@@ -423,6 +351,22 @@ function updateStreakAfterWin() {
 
   streakText.textContent = `Streak ${streak}`;
 }
+
+// BUTTONS
+
+newGameBtn.addEventListener("click", createBoard);
+
+checkBtn.addEventListener("click", () => {
+  if (!checkIfSolved()) {
+    message.textContent = "Not complete yet.";
+  }
+});
+
+playNowBtn.addEventListener("click", () => {
+  document.querySelector(".game-card").scrollIntoView({
+    behavior: "smooth"
+  });
+});
 
 // BOSS MODE
 
@@ -463,18 +407,17 @@ document.addEventListener("mousemove", (event) => {
 
   if (Math.abs(distance) < minDistance) return;
 
-  const currentDirection = distance > 0 ? "right" : "left";
+  const direction = distance > 0 ? "right" : "left";
 
-  if (lastDirection && currentDirection !== lastDirection) {
+  if (lastDirection && direction !== lastDirection) {
     directionChanges++;
   }
 
-  lastDirection = currentDirection;
+  lastDirection = direction;
   lastX = event.clientX;
 
   if (directionChanges >= changesToBlackout) {
     blackout.classList.add("active");
-
     directionChanges = 0;
     lastDirection = null;
     lastX = null;

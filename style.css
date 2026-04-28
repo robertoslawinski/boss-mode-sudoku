@@ -773,4 +773,25 @@ body {
   .work-header h2 {
     font-size: 28px;
   }
+  .share-btn{
+  margin-top:16px;
+  width:100%;
+  height:56px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,#16a34a,#15803d);
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+  transition:transform .15s ease,opacity .15s ease;
+}
+
+.share-btn:hover{
+  transform:translateY(-2px);
+}
+
+.hidden{
+  display:none;
+}
 }
