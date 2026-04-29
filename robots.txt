@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bossmodesudoku.netlify.app/sitemap.xml
