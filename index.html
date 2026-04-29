@@ -207,31 +207,52 @@
 
     <div>
       <h2>Performance Dashboard</h2>
-      <p>Quarterly analytics overview</p>
+      <p>Operations summary - Q3 planning workspace</p>
     </div>
 
-    <button id="restoreBtn">Resume Session</button>
+    <div class="work-header-actions">
+      <span class="sync-status">Synced 2 min ago</span>
+      <button id="restoreBtn">Resume Session</button>
+    </div>
 
   </div>
 
   <div class="work-grid">
 
     <div class="work-card">
-      <span>Revenue</span>
+      <div class="metric-header">
+        <span>Revenue</span>
+        <em class="work-badge green">On Track</em>
+      </div>
       <strong>$48,920</strong>
-      <p class="positive">+12.4% this month</p>
+      <p class="positive">+12.4% vs previous month</p>
     </div>
 
     <div class="work-card">
-      <span>Tasks</span>
+      <div class="metric-header">
+        <span>Tasks</span>
+        <em class="work-badge orange">Review</em>
+      </div>
       <strong>27</strong>
-      <p>8 pending review</p>
+      <p>8 pending stakeholder review</p>
     </div>
 
     <div class="work-card">
-      <span>Meetings</span>
+      <div class="metric-header">
+        <span>Risk Index</span>
+        <em class="work-badge blue">Stable</em>
+      </div>
+      <strong>4.2</strong>
+      <p>2 items require follow-up</p>
+    </div>
+
+    <div class="work-card">
+      <div class="metric-header">
+        <span>Meetings</span>
+        <em class="work-badge gray">Today</em>
+      </div>
       <strong>5</strong>
-      <p>Today</p>
+      <p>Next briefing at 3:30 PM</p>
     </div>
 
   </div>
@@ -246,6 +267,7 @@
         <thead>
           <tr>
             <th>Project</th>
+            <th>Owner</th>
             <th>Status</th>
             <th>Deadline</th>
           </tr>
@@ -254,26 +276,37 @@
         <tbody>
           <tr>
             <td>Client Report</td>
-            <td>In Progress</td>
+            <td>Finance Ops</td>
+            <td><span class="work-badge blue">In Progress</span></td>
             <td>Today</td>
           </tr>
 
           <tr>
             <td>Budget Review</td>
-            <td>Pending</td>
+            <td>Strategy</td>
+            <td><span class="work-badge orange">Pending</span></td>
             <td>Tomorrow</td>
           </tr>
 
           <tr>
             <td>Marketing Analysis</td>
-            <td>Completed</td>
+            <td>Growth</td>
+            <td><span class="work-badge green">Completed</span></td>
             <td>Yesterday</td>
           </tr>
 
           <tr>
             <td>Performance Forecast</td>
-            <td>In Progress</td>
+            <td>Analytics</td>
+            <td><span class="work-badge blue">In Progress</span></td>
             <td>Friday</td>
+          </tr>
+
+          <tr>
+            <td>Vendor Alignment</td>
+            <td>Procurement</td>
+            <td><span class="work-badge gray">Queued</span></td>
+            <td>Next week</td>
           </tr>
         </tbody>
       </table>
@@ -282,20 +315,45 @@
 
     <div class="work-notes">
 
-      <h3>Internal Notes</h3>
+      <div class="panel-heading">
+        <h3>Pipeline Trend</h3>
+        <span>Last 6 weeks</span>
+      </div>
 
       <p>
-        Final review scheduled for the afternoon. Please update all figures
-        before the next status meeting.
+        Revenue quality is improving while review volume remains elevated.
+        Prepare updated assumptions before the afternoon status meeting.
       </p>
 
-      <div class="fake-chart">
-        <div style="height:42%"></div>
-        <div style="height:65%"></div>
-        <div style="height:54%"></div>
-        <div style="height:78%"></div>
-        <div style="height:90%"></div>
-        <div style="height:70%"></div>
+      <div class="fake-chart" aria-hidden="true">
+        <div class="chart-grid"></div>
+        <div class="chart-bar" style="height:42%"><span>W1</span></div>
+        <div class="chart-bar" style="height:58%"><span>W2</span></div>
+        <div class="chart-bar" style="height:51%"><span>W3</span></div>
+        <div class="chart-bar" style="height:72%"><span>W4</span></div>
+        <div class="chart-bar" style="height:84%"><span>W5</span></div>
+        <div class="chart-bar" style="height:68%"><span>W6</span></div>
+        <svg class="trend-line" viewBox="0 0 300 140" preserveAspectRatio="none">
+          <polyline points="0,96 60,74 120,82 180,45 240,30 300,52" />
+        </svg>
+      </div>
+
+      <div class="activity-list">
+        <div>
+          <span class="activity-dot green"></span>
+          Forecast model updated
+          <small>12:48 PM</small>
+        </div>
+        <div>
+          <span class="activity-dot orange"></span>
+          Budget variance pending approval
+          <small>11:20 AM</small>
+        </div>
+        <div>
+          <span class="activity-dot blue"></span>
+          Client packet exported
+          <small>9:05 AM</small>
+        </div>
       </div>
 
     </div>
