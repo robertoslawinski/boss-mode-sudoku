@@ -64,6 +64,7 @@ const checkBtn = document.getElementById("checkBtn");
 const blackout = document.getElementById("blackout");
 const restoreBtn = document.getElementById("restoreBtn");
 const bossModeBtn = document.getElementById("bossModeBtn");
+const bossHotspot = document.getElementById("bossHotspot");
 const themeToggle = document.getElementById("themeToggle");
 const themeToggleText = document.getElementById("themeToggleText");
 const playNowBtn = document.getElementById("playNowBtn");
@@ -582,6 +583,8 @@ function restoreGame() {
 
 bossModeBtn.addEventListener("click", activateBossMode);
 
+bossHotspot.addEventListener("mouseenter", activateBossMode);
+
 restoreBtn.addEventListener("click", restoreGame);
 
 themeToggle.addEventListener("click", toggleTheme);
@@ -620,52 +623,6 @@ document.addEventListener("keydown", (event) => {
   if (moves[key]) {
     event.preventDefault();
     moveSelection(...moves[key]);
-  }
-});
-
-let lastX = null;
-let lastDirection = null;
-let directionChanges = 0;
-let lastMoveTime = Date.now();
-
-const minDistance = 80;
-const maxPause = 900;
-const changesToBlackout = 28;
-
-document.addEventListener("mousemove", (event) => {
-  const now = Date.now();
-
-  if (now - lastMoveTime > maxPause) {
-    directionChanges = 0;
-    lastDirection = null;
-    lastX = event.clientX;
-  }
-
-  lastMoveTime = now;
-
-  if (lastX === null) {
-    lastX = event.clientX;
-    return;
-  }
-
-  const distance = event.clientX - lastX;
-
-  if (Math.abs(distance) < minDistance) return;
-
-  const direction = distance > 0 ? "right" : "left";
-
-  if (lastDirection && direction !== lastDirection) {
-    directionChanges++;
-  }
-
-  lastDirection = direction;
-  lastX = event.clientX;
-
-  if (directionChanges >= changesToBlackout) {
-    activateBossMode();
-    directionChanges = 0;
-    lastDirection = null;
-    lastX = null;
   }
 });
 

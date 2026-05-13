@@ -46,6 +46,16 @@ body.dark-mode {
   background: #151515;
 }
 
+.boss-hotspot {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 88px;
+  height: 88px;
+  z-index: 800;
+  background: transparent;
+}
+
 .app-header {
   height: 70px;
   padding: 0 28px;
@@ -475,7 +485,6 @@ body.dark-mode .theme-toggle-icon {
   border-radius: 14px;
   background: white;
   border: 1px solid var(--border);
-  display: flex;
   align-items: center;
   gap: 14px;
 }
