@@ -47,8 +47,8 @@ body.dark-mode {
 }
 
 .app-header {
-  height: 82px;
-  padding: 0 32px;
+  height: 70px;
+  padding: 0 28px;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(14px);
@@ -64,8 +64,8 @@ body.dark-mode {
 }
 
 .brand-icon {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border-radius: 12px;
   background: transparent;
   border: none;
@@ -82,7 +82,7 @@ body.dark-mode {
 }
 
 .brand h1 {
-  font-size: 24px;
+  font-size: 21px;
   line-height: 1;
 }
 
@@ -133,14 +133,14 @@ body.dark-mode .theme-toggle-icon {
 }
 
 .app-shell {
-  max-width: 1220px;
+  max-width: 980px;
   margin: 0 auto;
-  padding: 24px 24px 34px;
+  padding: 22px 24px 34px;
 }
 
 .hero {
-  max-width: 700px;
-  margin-bottom: 20px;
+  max-width: 560px;
+  margin-bottom: 16px;
 }
 
 .eyebrow {
@@ -154,24 +154,24 @@ body.dark-mode .theme-toggle-icon {
 }
 
 .hero h2 {
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.04;
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.08;
   letter-spacing: 0;
   margin-bottom: 12px;
   color: var(--text);
 }
 
 .hero p {
-  max-width: 660px;
+  max-width: 500px;
   color: var(--muted);
   font-size: 16px;
   line-height: 1.5;
 }
 
 .hero-play-btn {
-  margin-top: 18px;
-  height: 50px;
-  padding: 0 26px;
+  margin-top: 14px;
+  height: 44px;
+  padding: 0 22px;
   border: none;
   border-radius: 12px;
   background: var(--blue-dark);
@@ -192,7 +192,7 @@ body.dark-mode .theme-toggle-icon {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: var(--shadow);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -211,11 +211,11 @@ body.dark-mode .theme-toggle-icon {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .game-top h2 {
-  font-size: 30px;
+  font-size: 25px;
   letter-spacing: 0;
 }
 
@@ -232,8 +232,8 @@ body.dark-mode .theme-toggle-icon {
 
 .game-layout {
   display: grid;
-  grid-template-columns: minmax(420px, 650px) 300px;
-  gap: 28px;
+  grid-template-columns: minmax(360px, 500px) 240px;
+  gap: 22px;
   align-items: start;
 }
 
@@ -243,8 +243,8 @@ body.dark-mode .theme-toggle-icon {
 
 .board-header {
   display: flex;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .info-box {
@@ -252,7 +252,7 @@ body.dark-mode .theme-toggle-icon {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 14px;
+  padding: 10px 12px;
 }
 
 .info-box span {
@@ -265,12 +265,12 @@ body.dark-mode .theme-toggle-icon {
 
 .info-box strong {
   color: var(--blue-dark);
-  font-size: 24px;
+  font-size: 21px;
 }
 
 .sudoku-board {
   width: 100%;
-  max-width: 650px;
+  max-width: 500px;
   aspect-ratio: 1 / 1;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
@@ -278,7 +278,7 @@ body.dark-mode .theme-toggle-icon {
   border-radius: 12px;
   overflow: hidden;
   background: var(--blue-dark);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
@@ -299,7 +299,7 @@ body.dark-mode .theme-toggle-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(22px, 4.2vw, 46px);
+  font-size: clamp(20px, 3.2vw, 34px);
   font-weight: 700;
   cursor: pointer;
   user-select: none;
@@ -357,7 +357,7 @@ body.dark-mode .theme-toggle-icon {
 
 .message {
   min-height: 28px;
-  margin-top: 16px;
+  margin-top: 12px;
   color: var(--muted);
   font-weight: 800;
   font-size: 16px;
@@ -394,22 +394,20 @@ body.dark-mode .theme-toggle-icon {
   background: #f9fbfd;
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 18px;
+  padding: 14px;
 }
 
 .panel-title {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .panel-title h3 {
-  font-size: 21px;
+  font-size: 18px;
   margin-bottom: 6px;
 }
 
 .panel-title p {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.4;
+  display: none;
 }
 
 .number-pad {
@@ -419,12 +417,12 @@ body.dark-mode .theme-toggle-icon {
 }
 
 .number-pad button {
-  height: 68px;
+  height: 52px;
   border: none;
   border-radius: 12px;
   background: #edf3f8;
   color: var(--blue-dark);
-  font-size: 32px;
+  font-size: 25px;
   font-weight: 900;
   cursor: pointer;
   transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
@@ -438,16 +436,16 @@ body.dark-mode .theme-toggle-icon {
 
 .actions {
   display: grid;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .primary-btn,
 .secondary-btn {
-  height: 50px;
+  height: 42px;
   border: none;
   border-radius: 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -471,6 +469,7 @@ body.dark-mode .theme-toggle-icon {
 }
 
 .focus-box {
+  display: none;
   margin-top: 18px;
   padding: 14px;
   border-radius: 14px;
@@ -504,6 +503,7 @@ body.dark-mode .theme-toggle-icon {
 }
 
 .leaderboard-box {
+  display: none;
   margin-top: 18px;
   padding: 14px;
   border-radius: 14px;
@@ -998,8 +998,8 @@ body.dark-mode .primary-btn {
 }
 
 .seo-section {
+  display: none;
   margin-top: 22px;
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
@@ -1064,7 +1064,7 @@ body.dark-mode .primary-btn {
   }
 
   .sudoku-board {
-    max-width: 640px;
+    max-width: 500px;
     margin: 0 auto;
   }
 
@@ -1091,7 +1091,7 @@ body.dark-mode .primary-btn {
 
 @media (max-width: 560px) {
   .app-shell {
-    padding: 14px 10px 24px;
+    padding: 14px 12px 24px;
   }
 
   .app-header {
@@ -1104,7 +1104,7 @@ body.dark-mode .primary-btn {
   }
 
   .hero h2 {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .hero p {
@@ -1116,18 +1116,18 @@ body.dark-mode .primary-btn {
   }
 
   .game-card {
-    padding: 16px;
+    padding: 14px;
     border-radius: 16px;
   }
 
   .game-top {
     align-items: flex-start;
-    gap: 14px;
+    gap: 10px;
     flex-direction: column;
   }
 
   .game-top h2 {
-    font-size: 26px;
+    font-size: 23px;
   }
 
   .brand h1 {
@@ -1139,8 +1139,8 @@ body.dark-mode .primary-btn {
   }
 
   .brand-icon {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
   }
 
   .board-header {
@@ -1184,9 +1184,9 @@ body.dark-mode .primary-btn {
   }
 
   .number-pad button {
-    height: 58px;
+    height: 48px;
     border-radius: 10px;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .actions {
